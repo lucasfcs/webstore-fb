@@ -1,0 +1,97 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+// schema.prisma
+
+// Tabela para representar os produtos disponíveis na loja
+model Product {
+  id           Int      @id @default(autoincrement())
+  name         String
+  description  String?
+  type         String // Tipo de produto (ex: "Roupa", "Calçado", "Acessório")
+  color        String? // Cor do produto
+  size         String? // Tamanho do produto
+  costPrice    Float // Preço de custo do produto
+  sellingPrice Float // Preço de venda do produto
+  createdAt    DateTime @default(now())
+
+  // Relacionamento com a tabela de estoque (cada produto tem um ou mais registros de estoque)
+  stocks Stock[]
+
+  // Relacionamento com a tabela de saída (cada produto pode ter várias saídas)
+  outputs Output[]
+
+  // Relacionamento com a tabela de entradas (cada produto pode ter várias entradas)
+  inputs Input[]
+}
+
+// Tabela para representar as saídas de estoque
+model Output {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  price     Float
+  totalPaid Float // Total pago pela saída de estoque
+  createdAt DateTime @default(now())
+
+  // Relacionamento com a tabela de produtos (cada saída pertence a um produto específico)
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+
+  // Relacionamento com a tabela de detalhes do pagamento (cada saída tem um ou mais detalhes de pagamento)
+  paymentDetails PaymentDetail[]
+  Payment        Payment?        @relation(fields: [paymentId], references: [id])
+  paymentId      Int?
+}
+
+// Tabela para representar os detalhes do pagamento
+model PaymentDetail {
+  id         Int      @id @default(autoincrement())
+  method     String // Método de pagamento (ex: "Dinheiro", "Cartão de crédito", "Transferência bancária")
+  amountPaid Float // Valor pago
+  createdAt  DateTime @default(now())
+
+  // Relacionamento com a tabela de saídas (cada detalhe de pagamento pertence a uma saída de estoque específica)
+  output   Output @relation(fields: [outputId], references: [id])
+  outputId Int
+}
+
+// Tabela para representar os pagamentos
+model Payment {
+  id        Int      @id @default(autoincrement())
+  method    String // Método de pagamento (ex: "Dinheiro", "Cartão de crédito", "Transferência bancária")
+  createdAt DateTime @default(now())
+
+  // Relacionamento com a tabela de saídas (cada pagamento pode estar associado a várias saídas)
+  outputs Output[]
+}
+
+// Tabela para representar as entradas de estoque
+model Input {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  price     Float
+  createdAt DateTime @default(now())
+
+  // Relacionamento com a tabela de produtos (cada entrada pertence a um produto específico)
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+}
+
+// Tabela para representar o estoque atual dos produtos
+model Stock {
+  id        Int      @id @default(autoincrement())
+  quantity  Int
+  color     String?
+  size      String? // Tamanho do produto no estoque
+  createdAt DateTime @default(now())
+
+  // Relacionamento com a tabela de produtos (cada entrada pertence a um produto específico)
+  product   Product @relation(fields: [productId], references: [id])
+  productId Int
+}
