@@ -14,6 +14,11 @@ export class ProductService {
     // }
 
     const product = await this.productRepository.createProduct({
+      name: {
+        connect: {
+          productId: data.name,
+        },
+      },
       ...data,
     });
 
