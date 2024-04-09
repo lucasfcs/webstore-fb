@@ -17,4 +17,30 @@ export class PrismaProductService implements ProductRepository {
     const result = await this.prismaService.product.findMany();
     return result;
   }
+
+  async findByName(name: string): Promise<any> {
+    const result = await this.prismaService.product.findFirst({
+      where: {
+        name: {
+          startsWith: name,
+        },
+      },
+      select: {
+        name: true,
+        description: true,
+        type: true,
+        sellingPrice: true,
+
+        stocks: {
+          select: {
+            product: true,
+            quantity: true,
+            size: true,
+            color: true,
+          },
+        },
+      },
+    });
+    return result;
+  }
 }

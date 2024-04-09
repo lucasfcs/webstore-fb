@@ -28,4 +28,8 @@ export class ProductService {
   async findAll(): Promise<any> {
     return this.productRepository.findAll();
   }
+
+  async findByName(name: string): Promise<any> {
+    return this.productRepository.findByName(name);
+  }
 }

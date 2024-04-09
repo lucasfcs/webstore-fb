@@ -6,4 +6,5 @@ export abstract class ProductRepository {
   abstract createProduct(data: Prisma.ProductCreateInput): Promise<any>;
 
   abstract findAll(): Promise<any>;
+  abstract findByName(name: string): Promise<any>;
 }

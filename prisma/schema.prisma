@@ -86,6 +86,7 @@ model Input {
 // Tabela para representar o estoque atual dos produtos
 model Stock {
   id        Int      @id @default(autoincrement())
+  name      String
   quantity  Int
   color     String?
   size      String? // Tamanho do produto no estoque
