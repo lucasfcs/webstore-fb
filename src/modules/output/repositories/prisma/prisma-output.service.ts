@@ -16,4 +16,18 @@ export class PrismaOutputService implements OutputRepository {
       },
     });
   }
+
+  async findByStock(data: OutputCreateDto): Promise<any> {
+    const stock = await this.prismaService.stock.findUnique({
+      where: {
+        id: data.productId,
+      },
+      select: {
+        quantity: true,
+      },
+    });
+    console.log(stock.quantity);
+
+    return stock;
+  }
 }
