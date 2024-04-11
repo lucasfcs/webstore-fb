@@ -45,7 +45,7 @@ model Output {
 
   // Relacionamento com a tabela de detalhes do pagamento (cada saída tem um ou mais detalhes de pagamento)
   paymentDetails PaymentDetail[]
-  Payment        Payment?        @relation(fields: [paymentId], references: [id])
+  payment        Payment?        @relation(fields: [paymentId], references: [id])
   paymentId      Int?
 }
 
