@@ -1,7 +1,8 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule } from '@nestjs/config';
 import { PrismaModule } from 'nestjs-prisma';
-import { InputModule } from './modules/input/stock.module';
+import { InputModule } from './modules/input/input.module';
+import { OutputModule } from './modules/output/output.module';
 import { ProductModule } from './modules/product/product.module';
 import { StockModule } from './modules/stock/stock.module';
 
@@ -12,6 +13,7 @@ import { StockModule } from './modules/stock/stock.module';
     ProductModule,
     StockModule,
     InputModule,
+    OutputModule,
   ],
   controllers: [],
   providers: [],

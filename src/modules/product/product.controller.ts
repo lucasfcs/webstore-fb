@@ -1,9 +1,10 @@
-import { Body, Controller, Get, Param, Post } from '@nestjs/common';
+import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dtos/create-product.dto';
+import { UpdateProductDto } from './dtos/update-product.dto';
 import { ProductService } from './product.service';
 
-@ApiTags()
+@ApiTags('Product')
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
@@ -33,5 +34,10 @@ export class ProductController {
   async findByName(@Param('name') name: string): Promise<any> {
     const result = await this.productService.findByName(name);
     return result;
+  }
+
+  @Patch()
+  async updateProduct(@Body() data: UpdateProductDto): Promise<any> {
+    const result = await this.productService.updateProduct(data);
   }
 }
