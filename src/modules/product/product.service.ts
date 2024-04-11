@@ -10,7 +10,7 @@ export class ProductService {
   async createProduct(data: CreateProductDto): Promise<any> {
     const isExist = await this.productRepository.findBy(data.name);
 
-    if (!isExist) {
+    if (isExist) {
       throw new BadRequestException('Produto já cadastrado.');
     }
 
