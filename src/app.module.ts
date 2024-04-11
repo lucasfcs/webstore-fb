@@ -5,6 +5,7 @@ import { InputModule } from './modules/input/input.module';
 import { OutputModule } from './modules/output/output.module';
 import { ProductModule } from './modules/product/product.module';
 import { StockModule } from './modules/stock/stock.module';
+import { PaymentModule } from './modules/payment/payment.module';
 
 @Module({
   imports: [
@@ -14,6 +15,7 @@ import { StockModule } from './modules/stock/stock.module';
     StockModule,
     InputModule,
     OutputModule,
+    PaymentModule,
   ],
   controllers: [],
   providers: [],
