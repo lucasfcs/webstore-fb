@@ -5,6 +5,17 @@ import { StockRepository } from '../stock-repository';
 @Injectable()
 export class PrismaStockService implements StockRepository {
   constructor(private readonly prismaService: PrismaService) {}
+
+  async findByName(name: string): Promise<any> {
+    const result = await this.prismaService.stock.findMany({
+      where: {
+        name: {
+          startsWith: name,
+        },
+      },
+    });
+    return result;
+  }
   async findAll(): Promise<any> {
     const result = await this.prismaService.stock.findMany({
       select: {
