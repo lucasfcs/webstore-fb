@@ -59,4 +59,16 @@ export class PrismaOutputService implements OutputRepository {
       },
     });
   }
+
+  async findByDate(startDate: string, endDate: string): Promise<any> {
+    const findOutput = await this.prismaService.output.findMany({
+      where: {
+        createdAt: {
+          gte: startDate,
+          lte: endDate,
+        },
+      },
+    });
+    return findOutput;
+  }
 }

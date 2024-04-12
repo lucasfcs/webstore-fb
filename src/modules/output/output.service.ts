@@ -18,4 +18,12 @@ export class OutputService {
     const result = await this.outputRepository.updateStock(data);
     return createOutput;
   }
+
+  async findByDate(startDate: string, endDate: string): Promise<any> {
+    const findOutput = await this.outputRepository.findByDate(
+      startDate,
+      endDate,
+    );
+    return findOutput;
+  }
 }

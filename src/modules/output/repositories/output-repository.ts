@@ -7,4 +7,5 @@ export abstract class OutputRepository {
   abstract findByStock(data: OutputCreateDto): Promise<any>;
   abstract methodPayment(payment: string): Promise<any>;
   abstract createOutput(data: OutputCreateDto): Promise<any>;
+  abstract findByDate(startDate: string, endDate: string): Promise<any>;
 }
