@@ -9,6 +9,12 @@ export class InputCreateDto {
   quantity!: number;
 
   @ApiProperty({
+    example: 10,
+  })
+  @IsNumber()
+  price!: number;
+
+  @ApiProperty({
     example: 1,
   })
   @IsNumber()

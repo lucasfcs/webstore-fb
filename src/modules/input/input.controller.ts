@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post } from '@nestjs/common';
+import { Body, Controller, Get, Post, Query } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
 import { InputCreateDto } from './dtos/input-create.dto';
 import { InputService } from './input.service';
@@ -17,6 +17,15 @@ export class InputController {
   @Get()
   async findAll(): Promise<any> {
     const result = await this.inputService.findAll();
+    return result;
+  }
+
+  @Get('range-date')
+  async findRange(
+    @Query('start') start: string,
+    @Query('end') end: string,
+  ): Promise<any> {
+    const result = await this.inputService.findRange(start, end);
     return result;
   }
 }

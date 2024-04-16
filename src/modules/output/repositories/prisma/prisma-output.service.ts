@@ -58,6 +58,7 @@ export class PrismaOutputService implements OutputRepository {
         },
       },
     });
+    return x;
   }
 
   async findByDate(startDate: string, endDate: string): Promise<any> {

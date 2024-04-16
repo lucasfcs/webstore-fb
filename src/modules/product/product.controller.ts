@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from '@nestjs/common';
+import { Body, Controller, Get, Patch, Post, Query } from '@nestjs/common';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
@@ -31,7 +31,7 @@ export class ProductController {
   }
 
   @Get('get-by-name')
-  async findByName(@Param('name') name: string): Promise<any> {
+  async findByName(@Query('name') name: string): Promise<any> {
     const result = await this.productService.findByName(name);
     return result;
   }
@@ -39,5 +39,6 @@ export class ProductController {
   @Patch()
   async updateProduct(@Body() data: UpdateProductDto): Promise<any> {
     const result = await this.productService.updateProduct(data);
+    return result;
   }
 }

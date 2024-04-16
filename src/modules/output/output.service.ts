@@ -15,7 +15,7 @@ export class OutputService {
     }
     const createOutput = await this.outputRepository.createOutput(data);
     // const payment = await this.outputRepository.methodPayment(data.payment);
-    const result = await this.outputRepository.updateStock(data);
+    await this.outputRepository.updateStock(data);
     return createOutput;
   }
 
