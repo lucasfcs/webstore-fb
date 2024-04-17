@@ -7,5 +7,5 @@ export abstract class InputRepository {
   abstract create(data: InputCreateDto): Promise<any>;
 
   abstract findAll(): Promise<any>;
-  abstract findRange(newStartDate: string, newEndDate: string): Promise<any>;
+  abstract findRange(start: string, end: string): Promise<any>;
 }
