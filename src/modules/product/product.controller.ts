@@ -30,12 +30,20 @@ export class ProductController {
     return result;
   }
 
+  @ApiOperation({
+    summary: 'get all products by name',
+    description: 'route where you search for products by a given name',
+  })
   @Get('get-by-name')
   async findByName(@Query('name') name: string): Promise<any> {
     const result = await this.productService.findByName(name);
     return result;
   }
 
+  @ApiOperation({
+    summary: 'Product change',
+    description: 'route that changes any field of the product',
+  })
   @Patch()
   async updateProduct(@Body() data: UpdateProductDto): Promise<any> {
     const result = await this.productService.updateProduct(data);
