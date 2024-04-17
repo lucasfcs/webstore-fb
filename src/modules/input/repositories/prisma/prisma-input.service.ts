@@ -1,5 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
+import { GetByRange } from '../../dtos/get-input.dto';
 import { InputCreateDto } from '../../dtos/input-create.dto';
 import { InputRepository } from '../input-repository';
 
@@ -35,7 +36,7 @@ export class PrismaInputService implements InputRepository {
     return result;
   }
 
-  async findRange(start: string, end: string): Promise<any> {
+  async findRange(start: string, end: string): Promise<GetByRange[]> {
     const dateStart = new Date(start);
     const dateEnd = new Date(end);
 

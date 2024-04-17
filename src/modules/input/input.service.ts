@@ -1,4 +1,5 @@
 import { Injectable } from '@nestjs/common';
+import { GetByRange } from './dtos/get-input.dto';
 import { InputCreateDto } from './dtos/input-create.dto';
 import { InputRepository } from './repositories/input-repository';
 
@@ -15,7 +16,7 @@ export class InputService {
     return this.inputRepository.findAll();
   }
 
-  async findRange(start: string, end: string): Promise<any> {
+  async findRange(start: string, end: string): Promise<GetByRange[]> {
     return this.inputRepository.findRange(start, end);
   }
 }
