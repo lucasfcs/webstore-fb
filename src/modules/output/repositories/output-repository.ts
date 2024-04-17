@@ -8,4 +8,5 @@ export abstract class OutputRepository {
   abstract methodPayment(payment: string): Promise<any>;
   abstract createOutput(data: OutputCreateDto): Promise<any>;
   abstract findByDate(startDate: string, endDate: string): Promise<any>;
+  abstract findAll(): Promise<any>;
 }

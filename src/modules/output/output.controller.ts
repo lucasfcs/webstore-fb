@@ -14,12 +14,18 @@ export class OutputController {
     return result;
   }
 
-  @Get()
+  @Get('range-date')
   async findByDate(
     @Query('startDate') startDate: string,
     @Query('endDate') endDate: string,
   ): Promise<any> {
     const result = await this.outputService.findByDate(startDate, endDate);
+    return result;
+  }
+
+  @Get()
+  async findAll(): Promise<any> {
+    const result = await this.outputService.findAll();
     return result;
   }
 }

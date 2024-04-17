@@ -26,4 +26,9 @@ export class OutputService {
     );
     return findOutput;
   }
+
+  async findAll(): Promise<any> {
+    const findOutput = await this.outputRepository.findAll();
+    return findOutput;
+  }
 }
