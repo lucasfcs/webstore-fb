@@ -25,7 +25,8 @@ export class ProductService {
   }
 
   async findByName(name: string): Promise<any> {
-    return this.productRepository.findByName(name);
+    const result = await this.productRepository.findByName(name);
+    return result;
   }
 
   async updateProduct(data: UpdateProductDto): Promise<any> {
