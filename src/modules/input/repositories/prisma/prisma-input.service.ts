@@ -9,16 +9,21 @@ export class PrismaInputService implements InputRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   async create(data: InputCreateDto): Promise<any> {
-    await this.prismaService.input.create({
+    const result = await this.prismaService.input.create({
       data: {
         price: data.price,
         quantity: data.quantity,
-        product: { connect: { id: data.productId } },
+        product: {
+          connect: {
+            id: data.productId,
+          },
+        },
       },
     });
+    return result;
   }
   async update(data: InputCreateDto): Promise<any> {
-    await this.prismaService.stock.update({
+    const result = await this.prismaService.stock.update({
       where: { id: data.productId },
       data: {
         quantity: {
@@ -26,10 +31,8 @@ export class PrismaInputService implements InputRepository {
         },
       },
     });
+    return result;
   }
-
-  //selling vendendo
-  // adcionando itens ao estoque
 
   async findAll(): Promise<any> {
     const result = await this.prismaService.input.findMany();

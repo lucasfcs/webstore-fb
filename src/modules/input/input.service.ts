@@ -13,10 +13,12 @@ export class InputService {
   }
 
   async findAll(): Promise<any> {
-    return this.inputRepository.findAll();
+    const result = await this.inputRepository.findAll();
+    return result;
   }
 
   async findRange(start: string, end: string): Promise<GetByRange[]> {
-    return this.inputRepository.findRange(start, end);
+    const result = await this.inputRepository.findRange(start, end);
+    return result;
   }
 }
