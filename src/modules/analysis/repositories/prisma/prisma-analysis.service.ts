@@ -7,8 +7,6 @@ export class PrismaAnalysisService implements AnalysisRepository {
   constructor(private readonly prismaService: PrismaService) {}
 
   async getAnalysis(now: Date, end: Date): Promise<any> {
-    console.log(end, now);
-
     const result = await this.prismaService.output.findMany({
       where: {
         createdAt: {
@@ -16,6 +14,35 @@ export class PrismaAnalysisService implements AnalysisRepository {
           lte: end,
         },
       },
+      select: {
+        id: true,
+        quantity: true,
+        price: true,
+        totalPaid: true,
+        createdAt: true,
+        product: {
+          select: {
+            name: true,
+            description: true,
+            color: true,
+            size: true,
+          },
+        },
+        paymentDetails: {
+          select: {
+            method: true,
+            amountPaid: true,
+          },
+        },
+        payment: true,
+      },
+      // select: {
+      // product: {
+      //   select: {
+      //     description: true,
+      //   },
+      // },
+      // },
     });
     return result;
   }
