@@ -44,6 +44,7 @@ export class PrismaAnalysisService implements AnalysisRepository {
       // },
       // },
     });
+
     return result;
   }
 }

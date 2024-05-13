@@ -13,6 +13,7 @@ export class AnalysisService {
     end.setHours(0, 0, 0, 0);
 
     const result = await this.analysisRepository.getAnalysis(end, now);
+
     return result;
   }
 }
