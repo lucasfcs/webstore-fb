@@ -1,10 +1,25 @@
-import { Body, Controller, Get, Patch, Post, Query } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import {
+  Body,
+  Controller,
+  Get,
+  Patch,
+  Post,
+  Query,
+  UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../decorators/roles.decorator';
+import { Role } from '../enums/role.enum';
+import { AuthGuard } from '../guards/auth.guard';
+import { RolesGuard } from '../guards/role.guard';
 import { CreateProductDto } from './dtos/create-product.dto';
 import { UpdateProductDto } from './dtos/update-product.dto';
 import { ProductService } from './product.service';
 
 @ApiTags('Product')
+@ApiBearerAuth()
+@Roles(Role.Admin, Role.Dono)
+@UseGuards(AuthGuard, RolesGuard)
 @Controller('product')
 export class ProductController {
   constructor(private readonly productService: ProductService) {}
