@@ -1,9 +1,16 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Body, Controller, Get, Post, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../decorators/roles.decorator';
+import { Role } from '../enums/role.enum';
+import { AuthGuard } from '../guards/auth.guard';
+import { RolesGuard } from '../guards/role.guard';
 import { OutputCreateDto } from './dtos/output-create.dto';
 import { OutputService } from './output.service';
 
 @ApiTags('Output')
+@ApiBearerAuth()
+@Roles(Role.Admin, Role.Dono)
+@UseGuards(AuthGuard, RolesGuard)
 @Controller('output')
 export class OutputController {
   constructor(private readonly outputService: OutputService) {}

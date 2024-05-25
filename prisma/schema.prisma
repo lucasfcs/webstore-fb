@@ -9,6 +9,27 @@ datasource db {
 
 // schema.prisma
 
+model User {
+  id         Int       @id @default(autoincrement())
+  name       String
+  username   String    @unique
+  password   String
+  role_id    Int
+  role       Role      @relation(fields: [role_id], references: [id])
+  active     Boolean?  @default(true)
+  created_at DateTime? @default(now())
+
+  @@map("gsm_users")
+}
+
+model Role {
+  id         Int       @id @default(autoincrement())
+  role       String    @unique @default("Admin")
+  user       User[]
+  active     Boolean?  @default(true)
+  created_at DateTime? @default(now())
+}
+
 // Tabela para representar os produtos disponíveis na loja
 model Product {
   id           Int      @id @default(autoincrement())
