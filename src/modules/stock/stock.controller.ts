@@ -1,8 +1,15 @@
-import { Controller, Get, Query } from '@nestjs/common';
-import { ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Controller, Get, Query, UseGuards } from '@nestjs/common';
+import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Roles } from '../decorators/roles.decorator';
+import { Role } from '../enums/role.enum';
+import { AuthGuard } from '../guards/auth.guard';
+import { RolesGuard } from '../guards/role.guard';
 import { StockService } from './stock.service';
 
 @ApiTags('Stock')
+@ApiBearerAuth()
+@Roles(Role.Admin, Role.Dono)
+@UseGuards(AuthGuard, RolesGuard)
 @Controller('stock')
 export class StockController {
   constructor(private readonly stockService: StockService) {}
