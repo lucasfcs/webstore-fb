@@ -10,6 +10,7 @@ import {
 } from '@nestjs/common';
 import {
   ApiBadRequestResponse,
+  ApiBearerAuth,
   ApiConflictResponse,
   ApiCreatedResponse,
   ApiOkResponse,
@@ -29,7 +30,9 @@ import { UserDoesNotExist } from './errors/user-does-not-exist';
 import { UsersService } from './user.service';
 
 @ApiTags('User')
-// @ApiBearerAuth()
+@ApiBearerAuth()
+@Roles(Role.Admin)
+@UseGuards(AuthGuard, RolesGuard)
 @Controller('users')
 export class UsersController {
   constructor(private readonly usersService: UsersService) {}

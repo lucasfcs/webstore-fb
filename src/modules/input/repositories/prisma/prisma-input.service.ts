@@ -39,7 +39,7 @@ export class PrismaInputService implements InputRepository {
     return result;
   }
 
-  async findRange(start: string, end: string): Promise<GetByRange[]> {
+  async findRange(start: string, end: string): Promise<GetByRange[] | any> {
     const dateStart = new Date(start);
     const dateEnd = new Date(end);
 
