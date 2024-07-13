@@ -6,7 +6,7 @@ import { ProductRepository } from '../product-repository';
 
 @Injectable()
 export class PrismaProductService implements ProductRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) { }
 
   async createProduct(data: CreateProductDto): Promise<any> {
     try {
@@ -48,7 +48,28 @@ export class PrismaProductService implements ProductRepository {
   }
 
   async findAll(): Promise<any> {
-    const result = await this.prismaService.product.findMany();
+    const result = await this.prismaService.product.findMany(
+      {
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          type: true,
+          color: true,
+          size: true,
+          costPrice: true,
+          sellingPrice: true,
+          createdAt: true,
+
+          stocks: {
+            select: {
+              quantity: true,
+              size: true,
+            }
+          }
+        }
+      }
+    );
     return result;
   }
 
