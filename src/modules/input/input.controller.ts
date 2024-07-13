@@ -4,7 +4,7 @@ import { Roles } from '../decorators/roles.decorator';
 import { Role } from '../enums/role.enum';
 import { AuthGuard } from '../guards/auth.guard';
 import { RolesGuard } from '../guards/role.guard';
-import { InputCreateDto } from './dtos/input-create.dto';
+import { CreateMultipleInputsDto, InputCreateDto } from './dtos/input-create.dto';
 import { InputService } from './input.service';
 
 @ApiTags('Input')
@@ -13,7 +13,7 @@ import { InputService } from './input.service';
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('input')
 export class InputController {
-  constructor(private readonly inputService: InputService) {}
+  constructor(private readonly inputService: InputService) { }
 
   @ApiOperation({
     summary: 'route that creates a product entry',
@@ -21,7 +21,7 @@ export class InputController {
       'route that carries out the entry of a certain product from stock.',
   })
   @Post()
-  async create(@Body() data: InputCreateDto): Promise<any> {
+  async create(@Body() data: CreateMultipleInputsDto): Promise<any> {
     const result = await this.inputService.create(data);
     return result;
   }

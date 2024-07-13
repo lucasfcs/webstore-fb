@@ -1,15 +1,15 @@
 import { Injectable } from '@nestjs/common';
 import { GetByRange } from './dtos/get-input.dto';
-import { InputCreateDto } from './dtos/input-create.dto';
+import { CreateMultipleInputsDto, InputCreateDto } from './dtos/input-create.dto';
 import { InputRepository } from './repositories/input-repository';
 
 @Injectable()
 export class InputService {
-  constructor(private readonly inputRepository: InputRepository) {}
+  constructor(private readonly inputRepository: InputRepository) { }
 
-  async create(data: InputCreateDto): Promise<any> {
-    await this.inputRepository.update(data);
-    await this.inputRepository.create(data);
+  async create(data: CreateMultipleInputsDto): Promise<any> {
+    await this.inputRepository.update(data.inputs);
+    await this.inputRepository.create(data.inputs);
   }
 
   async findAll(): Promise<any> {

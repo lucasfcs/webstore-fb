@@ -1,37 +1,47 @@
 import { Injectable } from '@nestjs/common';
 import { PrismaService } from 'nestjs-prisma';
 import { GetByRange } from '../../dtos/get-input.dto';
-import { InputCreateDto } from '../../dtos/input-create.dto';
+import { CreateMultipleInputsDto, InputCreateDto } from '../../dtos/input-create.dto';
 import { InputRepository } from '../input-repository';
 
 @Injectable()
 export class PrismaInputService implements InputRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) { }
 
-  async create(data: InputCreateDto): Promise<any> {
-    const result = await this.prismaService.input.create({
-      data: {
-        price: data.price,
-        quantity: data.quantity,
-        product: {
-          connect: {
-            id: data.productId,
+  async create(data: InputCreateDto[]): Promise<any[]> {
+    const results = [];
+    for (const item of data) {
+      const result = await this.prismaService.input.create({
+        data: {
+          price: item.price,
+          quantity: item.quantity,
+          product: {
+            connect: {
+              id: item.productId,
+            },
           },
         },
-      },
-    });
-    return result;
+      });
+      results.push(result);
+    }
+    return results;
   }
-  async update(data: InputCreateDto): Promise<any> {
-    const result = await this.prismaService.stock.update({
-      where: { id: data.productId },
-      data: {
-        quantity: {
-          increment: data.quantity,
+
+
+  async update(data: InputCreateDto[]): Promise<any[]> {
+    const results = [];
+    for (const item of data) {
+      const result = await this.prismaService.stock.update({
+        where: { id: item.productId },
+        data: {
+          quantity: {
+            increment: item.quantity,
+          },
         },
-      },
-    });
-    return result;
+      });
+      results.push(result);
+    }
+    return results;
   }
 
   async findAll(): Promise<any> {
