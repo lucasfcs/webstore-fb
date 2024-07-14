@@ -1,21 +1,26 @@
 import { BadGatewayException, Injectable } from '@nestjs/common';
-import { OutputCreateDto } from './dtos/output-create.dto';
+import { CreateMultipleOutputsDto, OutputCreateDto } from './dtos/output-create.dto';
 import { OutputRepository } from './repositories/output-repository';
 
 @Injectable()
 export class OutputService {
-  constructor(private readonly outputRepository: OutputRepository) {}
-  async create(data: OutputCreateDto): Promise<any> {
-    const findQuantity = await this.outputRepository.findByStock(data);
+  constructor(private readonly outputRepository: OutputRepository) { }
+  async create(data: CreateMultipleOutputsDto): Promise<any[]> {
+    const results = [];
+    for (const output of data.outputs) {
+      const findQuantity = await this.outputRepository.findByStock(output);
 
-    if (data.quantity > findQuantity.quantity) {
-      throw new BadGatewayException(
-        'A quantidade solicitada, excede a quantidade que temos no estoque.',
-      );
+      if (output.quantity > findQuantity.quantity) {
+        throw new BadGatewayException(
+          'The requested quantity exceeds the quantity in stock.',
+        );
+      }
+
+      const createOutput = await this.outputRepository.createOutput(output);
+      await this.outputRepository.updateStock(output);
+      results.push(createOutput);
     }
-    const createOutput = await this.outputRepository.createOutput(data);
-    this.outputRepository.updateStock(data);
-    return createOutput;
+    return results;
   }
 
   async findByDate(startDate: string, endDate: string): Promise<any> {

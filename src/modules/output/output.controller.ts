@@ -4,7 +4,7 @@ import { Roles } from '../decorators/roles.decorator';
 import { Role } from '../enums/role.enum';
 import { AuthGuard } from '../guards/auth.guard';
 import { RolesGuard } from '../guards/role.guard';
-import { OutputCreateDto } from './dtos/output-create.dto';
+import { CreateMultipleOutputsDto, OutputCreateDto } from './dtos/output-create.dto';
 import { OutputService } from './output.service';
 
 @ApiTags('Output')
@@ -13,14 +13,14 @@ import { OutputService } from './output.service';
 @UseGuards(AuthGuard, RolesGuard)
 @Controller('output')
 export class OutputController {
-  constructor(private readonly outputService: OutputService) {}
+  constructor(private readonly outputService: OutputService) { }
 
   @ApiOperation({
     summary: 'product exit route',
     description: 'route that creates the movement of a product out of stock',
   })
   @Post()
-  async create(@Body() data: OutputCreateDto): Promise<any> {
+  async create(@Body() data: CreateMultipleOutputsDto) {
     const result = await this.outputService.create(data);
     return result;
   }

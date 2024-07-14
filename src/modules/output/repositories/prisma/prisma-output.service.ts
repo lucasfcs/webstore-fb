@@ -5,10 +5,17 @@ import { OutputRepository } from '../output-repository';
 
 @Injectable()
 export class PrismaOutputService implements OutputRepository {
-  constructor(private readonly prismaService: PrismaService) {}
+  constructor(private readonly prismaService: PrismaService) { }
+
+  async findByStock(data: OutputCreateDto): Promise<any> {
+    return await this.prismaService.stock.findUnique({
+      where: { id: data.productId },
+      select: { quantity: true },
+    });
+  }
 
   async createOutput(data: OutputCreateDto): Promise<any> {
-    const createOutput = await this.prismaService.output.create({
+    return await this.prismaService.output.create({
       data: {
         price: data.price,
         quantity: data.quantity,
@@ -23,7 +30,6 @@ export class PrismaOutputService implements OutputRepository {
         payment: { connect: { id: data.paymentId } },
       },
     });
-    return createOutput;
   }
 
   async updateStock(data: OutputCreateDto): Promise<any> {
@@ -35,19 +41,6 @@ export class PrismaOutputService implements OutputRepository {
         },
       },
     });
-  }
-
-  async findByStock(data: OutputCreateDto): Promise<any> {
-    const stock = await this.prismaService.stock.findUnique({
-      where: {
-        id: data.productId,
-      },
-      select: {
-        quantity: true,
-      },
-    });
-
-    return stock;
   }
 
   async methodPayment(payment: string): Promise<any> {
